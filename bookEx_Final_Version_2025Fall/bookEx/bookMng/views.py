@@ -114,3 +114,15 @@ def book_delete(request, book_id):
                   {
                       'item_list': MainMenu.objects.all(),
                   })
+from django.http import JsonResponse
+
+def book_info(request, book_id):
+    book = Book.objects.get(id=book_id)
+    return JsonResponse({
+        "name": book.name,
+        "author": book.author,
+        "price": str(book.price),
+        "summary": book.summary,
+        "username": str(book.username),
+        "picture": book.picture.url if book.picture else "/static/img/placeholder_book.png"
+    })
