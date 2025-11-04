@@ -232,3 +232,16 @@ def rate_book(request, book_id):
 
     messages.success(request, f'Your rating ({value}★) has been saved!')
     return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    # only allow user who wrote the comment to delete it
+    if request.user != comment.user:
+        messages.error(request, "You can only delete your own comments.")
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+
+    comment.delete()
+    messages.success(request, "Comment deleted successfully.")
+    return redirect(request.META.get("HTTP_REFERER", "/"))

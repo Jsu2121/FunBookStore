@@ -48,6 +48,13 @@
                   <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
                 </div>
                 <p class="mb-0 text-secondary">{{ comment.text }}</p>
+                  {% if user.is_authenticated and user == comment.user %}
+                  <form action="{% url 'delete_comment' comment.id %}" method="post" style="display:inline;">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-danger mt-2">Delete</button>
+                  </form>
+                  {% endif %}
+
               </div>
             </div>
           {% endfor %}
