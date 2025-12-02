@@ -10,6 +10,9 @@ from django.db.models import Q
 
 from .models import MainMenu, Book, PurchasedBook, Comment, Rating
 from .forms import BookForm, RegisterForm, CommentForm
+import requests
+from django.conf import settings
+
 
 # Create your views here.
 
@@ -218,3 +221,61 @@ def delete_comment(request, comment_id):
     comment.delete()
     messages.success(request, "Comment deleted successfully.")
     return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+# def character_relationship(request, book_id):
+#     book = get_object_or_404(Book, id=book_id)
+#
+#     prompt = f"""
+#     Analyze the main character relationships in the book:
+#
+#     Title: {book.name}
+#     Author: {book.author}
+#
+#     Summary:
+#     {book.summary}
+#
+#     Provide:
+#     - Key characters
+#     - Their relationships
+#     - Conflicts
+#     - Emotional tone
+#     - Simple explanations
+#     """
+#
+#     headers = {
+#         "Content-Type": "application/json",
+#         "Authorization": f"Bearer {settings.OPENROUTER_API_KEY}",
+#     }
+#
+#     data = {
+#         "model": "openai/gpt-4o-mini",  # safe, free model to test
+#         "messages": [
+#             {"role": "user", "content": prompt},
+#         ],
+#     }
+#
+#     response = requests.post(
+#         "https://openrouter.ai/api/v1/chat/completions",
+#         headers=headers,
+#         json=data
+#     )
+#
+#     raw = response.text
+#     print("RAW OPENROUTER RESPONSE:", raw)
+#
+#     try:
+#         json_data = response.json()
+#     except Exception:
+#         ai_text = f"Could not read JSON:\n{raw}"
+#         return render(request, "bookMng/character_relationship.html", {"book": book, "ai_text": ai_text})
+#
+#     if "choices" not in json_data:
+#         ai_text = f"OpenRouter error:\n{raw}"
+#     else:
+#         ai_text = json_data["choices"][0]["message"]["content"]
+#
+#     return render(request, "bookMng/character_relationship.html", {
+#         "book": book,
+#         "ai_text": ai_text
+#     })

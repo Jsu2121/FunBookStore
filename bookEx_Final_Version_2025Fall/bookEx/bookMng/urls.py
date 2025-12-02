@@ -22,6 +22,8 @@ urlpatterns = [
     path('books/<int:book_id>/rate/', views.rate_book, name='rate_book'),
     path("comment/delete/<int:comment_id>/", views.delete_comment, name="delete_comment"),
     path("aboutus/", views.about, name="about"),
+    #path("relationships/<int:book_id>/", views.character_relationship, name="character_relationship"),
+
 
 
 

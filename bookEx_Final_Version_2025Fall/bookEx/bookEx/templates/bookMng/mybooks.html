@@ -74,6 +74,14 @@ function showDetails(id) {
             </span>
           </div>
         </div>
+<!--        this for the ai character relationships-->
+<!--        <br>-->
+<!--            <a href="/relationships/${data.id}/"-->
+<!--            class="btn btn-primary"-->
+<!--            style="margin-top:10px; display:block; width:100%; text-align:center;">-->
+<!--            AI Character Relationships-->
+<!--            </a>-->
+
 
         ${data.can_delete ? `
           <button onclick="removeOwnership(${data.id})" class="btn btn-danger mt-3">
@@ -102,7 +110,7 @@ function removeOwnership(id) {
   })
   .then(res => res.json())
   .then(() => {
-    alert("✅ Book removed from your library.");
+    alert("Book removed from your library.");
     location.reload();
   });
 }
